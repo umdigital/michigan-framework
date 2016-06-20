@@ -28,9 +28,7 @@ MichiganFramework::setConfig( 'footer', 'widget_prefix1', 'enabled', 0 );
 ```
 
 ### Built-in Menu Locations
-Top Menu: *This menu is positioned before the section-header zone*
 Header Menu: *This menu is positioned between section-header and section-content zones*
-Footer Menu: *This menu is positioned after the section-footer zone*
 
 
 ### Widgets
@@ -39,7 +37,7 @@ A widget location will not render if no widgets have been assigned to the locati
 
 
 ### Menus
-Menus can be disabled by setting the value to an empty string `top-menu = ''`
+Menus can be disabled by setting the value to an empty string `header-menu = ''`
 
 
 ### Admin Menu
