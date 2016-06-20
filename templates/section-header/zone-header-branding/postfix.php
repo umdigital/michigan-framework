@@ -1,0 +1,1 @@
+<?MichiganFramework::displayWidget( 'header' );?>

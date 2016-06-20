@@ -1,0 +1,30 @@
+#wrapper {
+    min-width: 960px;
+}
+
+#header .widgets {
+    min-height: 25px;
+}
+
+.widget_search input[type="search"] {
+    height: 23px;
+    margin: 0 !important;
+}
+
+#content #sidebar + #main {
+    margin-top: 0 !important;
+}
+
+#content #sidebar + #main > .container {
+    margin-left: 0 !important;
+}
+
+#content .rightbar #sidebar + #main > .container {
+    margin-left: -0.9375rem !important;
+    margin-right: 0 !important;
+}
+
+#content #sidebar .widget_nav_menu .sub-menu .sub-menu li a:before,
+#content #sidebar .widget_pages .children .children li a:before {
+    content: '';
+}

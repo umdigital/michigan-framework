@@ -1,0 +1,135 @@
+{
+    "header": {
+        "__comment": "HEADER WIDGETS",
+        "branding": {
+            "columns": {
+                "large":  16
+            }
+        },
+
+        "widget_prefix": {
+            "columns": {
+                "large":  16
+            }
+        },
+        "widget_first": {
+            "columns": {
+                "large":  16
+            }
+        },
+        "widget_second": {
+            "columns": {
+                "large":  16
+            }
+        },
+        "widget_postfix": {
+            "columns": {
+                "large":  16
+            }
+        }
+    },
+
+
+    "content": {
+        "__comment": "PREFIX: COLUMNS MUST ADD UP TO 16",
+        "widget_prefix1": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix2": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix3": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix4": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+
+        "__comment": "CONTENT AREA: will become 16 - first - second",
+        "widget_first": {
+            "columns": {
+                "small":  16,
+                "medium": 4,
+                "large":  4
+            }
+        },
+        "widget_second": {
+            "columns": {
+                "small":  16,
+                "medium": 3,
+                "large":  2
+            }
+        }
+    },
+
+
+    "footer": {
+        "__comment": "FOOTER WIDGETS",
+        "content": {
+            "columns": {
+                "large":  16
+            }
+        },
+
+        "widget_prefix1": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix2": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix3": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+        "widget_prefix4": {
+            "columns": {
+                "small":  16,
+                "medium": 8,
+                "large":  4
+            }
+        },
+
+        "widget_top": {
+            "columns": {
+                "large":  16
+            }
+        },
+        "widget_bottom": {
+            "columns": {
+                "large":  16
+            }
+        },
+        "widget_postfix": {
+            "columns": {
+                "large":  16
+            }
+        }
+    }
+}

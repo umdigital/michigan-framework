@@ -1,0 +1,89 @@
+/* Widget Debug
+================================================== */
+.mfwWidget .mfwWidgetDescription {
+    display: none;
+    border: 1px solid #cccccc;
+    background-color: rgba( 185, 185, 185, .25 );
+    margin: 0 0 10px 0;
+    padding: 9px 12px;
+    overflow: hidden;
+}
+
+.mfwWidget .mfwWidgetDescription h6 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1em;
+}
+
+.mfwWidget .mfwWidgetDescription p {
+    display: none;
+    margin: 0;
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1em;
+}
+
+.mfwWidget .mfwWidgetDescription:hover {
+    background-color: rgba( 185, 185, 185, .5 );
+}
+
+.mfwWidget .mfwWidgetDescription:hover h6 {
+    display: none;
+}
+
+.mfwWidget .mfwWidgetDescription:hover p {
+    display: block;
+}
+
+body.mfwDebug.mfwDebugWidgets .mfwWidget .mfwWidgetDescription {
+    display: block;
+}
+
+.mfwInactive {
+    display: none !important;
+}
+
+body.mfwDebug.mfwDebugWidgets .mfwWidgetGroup.mfwInactive,
+body.mfwDebug.mfwDebugWidgets .mfwWidget.mfwInactive {
+    display: inherit !important;
+}
+
+
+
+/* GRID DEBUG
+================================================== */
+#mfwGridOverlay {
+    display: none;
+}
+
+body.mfwDebugGrid #mfwGridOverlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 999;
+}
+
+body.mfwDebugGrid #mfwGridOverlay * {
+    height: 100%;
+}
+
+body.mfwDebugGrid #mfwGridOverlay .columns {
+    border-left: 1px solid pink;
+    border-right: 1px solid pink;
+}
+body.mfwDebugGrid #mfwGridOverlay .columns:first-child {
+    border-left-width: 2px;
+}
+body.mfwDebugGrid #mfwGridOverlay .columns:last-child {
+    border-right-width: 2px;
+}
+
+body.mfwDebugGrid #mfwGridOverlay .mfwGridBackground {
+    background-color: pink;
+    margin: 0 -2px;
+}

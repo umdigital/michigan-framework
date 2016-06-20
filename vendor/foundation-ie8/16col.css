@@ -1,0 +1,21 @@
+.small-1.columns,.medium-1.columns,.large-1.columns {width:6.25% !important;}
+.small-2.columns,.medium-2.columns,.large-2.columns {width:12.5% !important;}
+.small-3.columns,.medium-3.columns,.large-3.columns {width:18.75% !important;}
+.small-4.columns,.medium-4.columns,.large-4.columns {width:25% !important;}
+.small-5.columns,.medium-5.columns,.large-5.columns {width:31.25% !important;}
+.small-6.columns,.medium-6.columns,.large-6.columns {width:37.5% !important;}
+.small-7.columns,.medium-7.columns,.large-7.columns {width:43.75% !important;}
+.small-8.columns,.medium-8.columns,.large-8.columns {width:50% !important;}
+.small-9.columns,.medium-9.columns,.large-9.columns {width:56.25% !important;}
+.small-10.columns,.medium-10.columns,.large-10.columns {width:62.5% !important;}
+.small-11.columns,.medium-11.columns,.large-11.columns {width:68.75% !important;}
+.small-12.columns,.medium-12.columns,.large-12.columns {width:75% !important;}
+.small-13.columns,.medium-13.columns,.large-13.columns {width:81.25% !important;}
+.small-14.columns,.medium-14.columns,.large-14.columns {width:87.5% !important;}
+.small-15.columns,.medium-15.columns,.large-15.columns {width:93.75% !important;}
+.small-16.columns,.medium-16.columns,.large-16.columns {width:100% !important;}
+
+.top-bar-section UL { width:inherit !important; }
+.top-bar-section UL LI { float:left !important; }
+.top-bar { height:inherit !important; }
+.row { width: 960px !important; }
