@@ -55,3 +55,12 @@ This is where the default page, posts, and homepage templates live.  Also for cu
 - Place CSS within /styles/*.css to have them autoloaded into the theme
 - Place JavaScript within /scripts/*.js to have them autoloaded into the theme
 - NOTE: The files will be loaded in alphabetical order
+
+## Shortcodes
+### Accordion
+An accessible & print friendly accordion that uses minimal JavaScript.
+```
+[accordion title="Title of Accordion" class="addtional-css-classes-to-add"]
+Your accordion content here
+[/accordion]
+```

@@ -57,8 +57,9 @@
             }
         });
 
-        // wait for assets to load before running responsive menu calculations
+        // wait for assets to load
         $(window).load(function(){
+            // RESPONSIVE MENU
             var mainMenuWrap = $('#zone-header-menu .mfwMenu');
             var mainMenuList = mainMenuWrap.find('.header-menu');
 
@@ -84,6 +85,53 @@
 
             $(document).on('click', '#zone-header-menu .hamburger-header', function(){
                 mainMenuList.slideToggle();
+            });
+
+
+            // ACCORDION
+            $('.mfw-accordion > input[type="checkbox"]').change(function(){
+                var thisContent = $(this).parent().find('> .mfw-accordion-content-wrap');
+
+                // if accordion should be shown, set maxheight
+                if( $(this).is(':checked') ) {
+                    thisContent.css({
+                            'maxHeight': thisContent.data('maxheight')
+                        });
+                }
+                // reset maxheight to default
+                else {
+                    thisContent.css({
+                        'maxHeight': ''
+                    });
+                }
+            });
+            // handle keyboard accessibility
+            $('.mfw-accordion > label').keydown(function( event ){
+                if( (event.which === 13) || (event.which === 32) ) {
+                    event.preventDefault();
+
+                    $(this).parent().find('> input[type="checkbox"]').trigger('click');
+                }
+            });
+
+            // determine each accordion contents maxheight
+            var recalcAccordions = function(){
+                $('.mfw-accordion').each(function(){
+                    var thisContent = $(this).find('> .mfw-accordion-content-wrap');
+
+                    thisContent.css('maxHeight','inherit')
+                        .data('maxheight', thisContent.height() * 1.1 )
+                        .css('maxHeight','');
+
+                    if( $(this).find('> input[type="checkbox"]').is(':checked') ) {
+                        thisContent.css('maxHeight', thisContent.data('maxheight') );
+                    }
+                });
+            };
+            recalcAccordions();
+
+            $(window).resize(function(){
+                recalcAccordions()
             });
         });
     });

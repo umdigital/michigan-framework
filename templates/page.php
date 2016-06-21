@@ -2,7 +2,7 @@
 
 <?php if( have_posts() ): ?>
 
-<div id="posts">
+<div id="page">
     <?php while (have_posts()) : the_post(); ?>
     <?php if( has_post_thumbnail() ): ?>
     <div class="featured-image">

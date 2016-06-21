@@ -113,6 +113,57 @@
     float: none;
 }
 
+/* MFW Accordion Shortcode
+================================================== */
+.mfw-accordion + .mfw-accordion {
+    margin-top: 1rem;
+}
+
+.mfw-accordion > input[type="checkbox"] {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+}
+
+.mfw-accordion > label {
+    position: relative;
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+    line-height: 1;
+    border: 1px solid;
+    z-index: 11;
+}
+.mfw-accordion > input[type="checkbox"]:focus ~ label,
+.mfw-accordion > label:hover {
+    background: rgba( 153, 153, 153, 0.4 );
+}
+
+.mfw-accordion > .mfw-accordion-content-wrap {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    z-index: 10;
+}
+.mfw-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
+    padding: 1em;
+}
+
+.mfw-accordion > input[type="checkbox"]:checked ~ .mfw-accordion-content-wrap {
+    max-height: 999999px;
+    transition: max-height 0.5s ease-in-out;
+}
+
+@media print {
+    .mfw-accordion .mfw-accordion-content-wrap {
+        max-height: inherit;
+    }
+}
+
 
 /* MISC
 ================================================== */

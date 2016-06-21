@@ -17,6 +17,7 @@ class MichiganFramework
     static private $_fontAwesomeVersion = '4.6.3';
 
     static private $_config             = array();
+    static private $_accordions         = 0;
 
     static private $_gitUpdate = array(
         'dir' => 'michigan-framework',
@@ -107,6 +108,7 @@ class MichiganFramework
         add_filter( 'posts_where', 'MichiganFramework::searchWhere' );
         add_filter( 'posts_distinct', 'MichiganFramework::searchDistinct' );
         add_filter( 'upload_mimes', 'MichiganFramework::customUploadTypes' );
+        add_filter( 'the_content', 'MichiganFramework::shortcodeEmptyParagraphFix' );
 
         if( !is_admin() ) {
             add_action( 'wp_before_admin_bar_render', 'MichiganFramework::adminBarRender' );
@@ -117,6 +119,9 @@ class MichiganFramework
 
         // ALLOW SHORTCODES IN TEXT WIDGET
         add_filter('widget_text', 'do_shortcode');
+
+        // ADD SHORTCODES
+        add_shortcode( 'accordion', 'MichiganFramework::shortcodeAccordion' );
 
 
         // THEME UPDATE HOOKS
@@ -540,6 +545,52 @@ class MichiganFramework
         }
 
         return $mimes;
+    }
+
+    /**
+     * Accordion Shortcode
+     */
+    static public function shortcodeAccordion( $atts, $content = null )
+    {
+        $atts = shortcode_atts(array(
+            'title' => 'ACCORDION NEEDS TITLE ATTRIBUTE',
+            'class' => ''
+        ), $atts );
+        $atts['title'] = $atts['title'] ?: 'ACCORDION NEEDS TITLE ATTRIBUTE';
+
+        self::$_accordions++;
+
+        return '
+        <div id="mfw-accordion-'. self::$_accordions .'" class="mfw-accordion '. $atts['class'] .'">
+            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" />
+            <label for="mfw-accordion-action-'. self::$_accordions .'" role="tab">'. $atts['title'] .'</label>
+            <div class="mfw-accordion-content-wrap" role="tabpanel"><div class="mfw-accordion-content">'. do_shortcode( $content ) .'</div></div>
+        </div>
+        ';
+    }
+
+    static public function shortcodeEmptyParagraphFix( $content )
+    {
+        // define your shortcodes to filter, '' filters all shortcodes
+        $shortcodes = apply_filters( 'mfw-shortcode-paragraphfix', array( 'accordion' ) );
+
+        foreach( $shortcodes as $shortcode ) {
+            $array = array (
+                '<p>[' . $shortcode => '[' .$shortcode,
+                '<p>[/' . $shortcode => '[/' .$shortcode,
+            );
+            $content = strtr( $content, $array );
+
+            $array = array(
+                $shortcode .'(.*?)\]<\/p>' => $shortcode . '$1]',
+                $shortcode .'(.*?)\]<br \/>' => $shortcode . '$1]'
+            );
+            foreach( $array as $search => $replace ) {
+                $content = preg_replace( '/'. $search .'/', $replace, $content );
+            }
+        }
+
+        return $content;
     }
 
 
