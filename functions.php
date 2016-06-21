@@ -105,6 +105,7 @@ class MichiganFramework
         add_action( 'wp_enqueue_scripts', 'MichiganFramework::enqueue', 1 );
         add_action( 'wp_head', 'MichiganFramework::wpHead', 99 );
         add_action( 'wp_footer', 'MichiganFramework::wpFooter', 99 );
+        add_filter( 'posts_join', 'MichiganFramework::searchJoin' );
         add_filter( 'posts_where', 'MichiganFramework::searchWhere' );
         add_filter( 'posts_distinct', 'MichiganFramework::searchDistinct' );
         add_filter( 'upload_mimes', 'MichiganFramework::customUploadTypes' );
@@ -504,13 +505,59 @@ class MichiganFramework
     }
 
     /**
+     * Join on postmeta table for search
+     */
+    static public function searchJoin( $join )
+    {
+        global $wpdb;
+
+        if( is_search() ) {
+            $keys = 0;
+
+            foreach( self::$_config['search']['meta-keys'] as $key ) {
+                if( $key == 'example-meta-key' ) {
+                    continue;
+                }
+
+                $keys++;
+            }
+
+            if( $keys ) {
+                $join .= "
+                LEFT JOIN {$wpdb->prefix}postmeta searchmeta
+                  ON searchmeta.post_id = {$wpdb->posts}.ID 
+                ";
+            }
+        }
+
+        return $join;
+    }
+
+    /**
      * Add custom meta fields to search
      */
     static public function searchWhere( $where )
     {
-        if( is_search() ) {
-            // @TODO: pull $_config['search']['meta-keys'] array into where clause
-            // @NOTE: see https://wordpress.org/support/topic/include-custom-field-values-in-search#post-1932930 by David C
+        // @NOTE: see https://wordpress.org/support/topic/include-custom-field-values-in-search#post-1932930 by David C
+        if( is_search() && isset( self::$_config['search']['meta-keys'] )  ) {
+            $tWhere   = array();
+            $tWhere[] = '$0'; // put back what we are "replacing"
+
+            // load in new meta fields to search against
+            foreach( self::$_config['search']['meta-keys'] as $key ) {
+                if( $key == 'example-meta-key' ) {
+                    continue;
+                }
+
+                $tWhere[] = "((searchmeta.meta_key = '{$key}') AND (searchmeta.meta_value  LIKE $2))";
+            }
+
+            // update WHERE clause
+            $where = preg_replace(
+                "/\(([^(]*?)post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+                implode( ' OR ', $tWhere ),
+                $where
+            );
         }
 
         return $where;
