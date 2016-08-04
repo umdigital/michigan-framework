@@ -134,12 +134,17 @@
     padding: 5px;
     cursor: pointer;
     line-height: 1;
-    border: 1px solid;
+    border: 1px solid #efefef;
     z-index: 11;
+    background-color: #efefef;
 }
-.mfw-accordion > input[type="checkbox"]:focus ~ label,
+.mfw-accordion > input[type="checkbox"]:focus ~ label {
+    border-color: #999;
+}
+
 .mfw-accordion > label:hover {
-    background: rgba( 153, 153, 153, 0.4 );
+    background: #999;
+    color: #fff;
 }
 
 .mfw-accordion > .mfw-accordion-content-wrap {
