@@ -1,5 +1,9 @@
+1.1.1 (2016-10-18)
+==================
+Fix issue with zone-content/postfix call actually calling the prefix template
+
 1.1 (2016-06-21)
-=======================
+================
 Add default 404 page
 Add Accordion Shortcode
 Update 16col defaults
