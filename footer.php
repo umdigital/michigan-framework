@@ -4,7 +4,7 @@
                     <?php get_template_part( 'templates/section-content/zone-content/content-main-postfix' ); ?>
                 </div>
 
-                <?php get_template_part( 'templates/section-content/zone-content/prefix' ); ?>
+                <?php get_template_part( 'templates/section-content/zone-content/postfix' ); ?>
 
                 <?php MichiganFramework::displayWidget( 'content_second' ); ?>
             </div>
