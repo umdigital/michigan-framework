@@ -151,8 +151,10 @@
     position: relative;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
     z-index: 10;
+}
+.mfw-accordion > .mfw-accordion-content-wrap.transition {
+    transition: max-height 0.3s ease-in-out;
 }
 .mfw-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
     padding: 1em;

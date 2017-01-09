@@ -95,8 +95,8 @@
                 // if accordion should be shown, set maxheight
                 if( $(this).is(':checked') ) {
                     thisContent.css({
-                            'maxHeight': thisContent.data('maxheight')
-                        });
+                        'maxHeight': thisContent.data('maxheight')
+                    });
                 }
                 // reset maxheight to default
                 else {
@@ -121,7 +121,8 @@
 
                     thisContent.css('maxHeight','inherit')
                         .data('maxheight', thisContent.height() * 1.1 )
-                        .css('maxHeight','');
+                        .css('maxHeight','')
+                        .addClass('transition');
 
                     if( $(this).find('> input[type="checkbox"]').is(':checked') ) {
                         thisContent.css('maxHeight', thisContent.data('maxheight') );
