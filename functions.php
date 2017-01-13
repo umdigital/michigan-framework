@@ -14,7 +14,7 @@ class MichiganFramework
 {
     static private $_version            = 1.0;
     static private $_foundationVersion  = '6.2.3';
-    static private $_fontAwesomeVersion = '4.6.3';
+    static private $_fontAwesomeVersion = '4.7.0';
 
     static private $_config             = array();
     static private $_accordions         = 0;
