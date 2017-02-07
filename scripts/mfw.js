@@ -119,7 +119,8 @@
                 $('.mfw-accordion').each(function(){
                     var thisContent = $(this).find('> .mfw-accordion-content-wrap');
 
-                    thisContent.css('maxHeight','inherit')
+                    thisContent.removeClass('transition')
+                        .css('maxHeight','inherit')
                         .data('maxheight', thisContent.height() * 1.1 )
                         .css('maxHeight','')
                         .addClass('transition');
