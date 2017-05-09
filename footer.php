@@ -24,7 +24,7 @@
                     <?php get_template_part( 'templates/footer' ); ?>
                 </div>
 
-                <?php get_template_part( 'templates/section-footer/zone-footer/prefix' ); ?>
+                <?php get_template_part( 'templates/section-footer/zone-footer/postfix' ); ?>
             </div>
         </div>
 
