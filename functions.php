@@ -418,7 +418,7 @@ class MichiganFramework
             if( isset( self::$_config[ $zone ][ $location ]['enabled'] ) && self::$_config[ $zone ][ $location ]['enabled'] ) {
                 // if we have widgets configured
                 if( is_active_sidebar( $location ) ) {
-                    return self::$_config['debug']['enabled'] ? $debug : ''; // show this area
+                    return $debug; // show this area
                 }
                 else if( self::$_config['debug']['enabled'] ) {
                     return $debug . ' mfwInactive';
@@ -495,11 +495,11 @@ class MichiganFramework
      */
     static public function displayWidget( $widget )
     {
-        if( !self::areaEnabled( 'widgets:'. $widget ) ) {
+        if( !($status = self::areaEnabled( 'widgets:'. $widget )) ) {
             return;
         }
 
-        echo '<div id="widget-'. $widget .'" class="'. self::getColumns( 'widgets:'. $widget ) .' columns mfwWidget">';
+        echo '<div id="widget-'. $widget .'" class="'. self::getColumns( 'widgets:'. $widget ) .' columns '.( is_string( $status ) ? $status : null).'">';
         dynamic_sidebar( $widget );
         echo '</div>';
     }
