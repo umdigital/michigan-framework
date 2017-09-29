@@ -65,7 +65,7 @@ class MichiganFramework
                     self::$_config,
                     $tColConfig
                 );
-                
+
                 // remerge child config on new defaults
                 if( $childConfig ) {
                     self::$_config = array_replace_recursive(
@@ -402,7 +402,7 @@ class MichiganFramework
                     }
                 }
             }
-        
+
             if( $allDisabled && self::$_config['debug']['enabled'] ) {
                 $return .= ' mfwInactive';
             }
@@ -411,7 +411,7 @@ class MichiganFramework
         }
         else {
             list( $zone, $location ) = explode( ':', $config );
-            
+
             $return = false;
 
             // if enabled in config
@@ -452,7 +452,7 @@ class MichiganFramework
         }
 
         return implode( ' ', apply_filters( 'mfw-getcolumns', $return, $config, $default ) );
-    }   
+    }
 
     /**
      * Calculate and get columns for main content well
@@ -525,7 +525,7 @@ class MichiganFramework
             if( $keys ) {
                 $join .= "
                 LEFT JOIN {$wpdb->prefix}postmeta searchmeta
-                  ON searchmeta.post_id = {$wpdb->posts}.ID 
+                  ON searchmeta.post_id = {$wpdb->posts}.ID
                 ";
             }
         }
@@ -638,6 +638,99 @@ class MichiganFramework
         }
 
         return $content;
+    }
+
+
+    static public function remoteImageThumb( $imageUrl, $size = 'full', $crop = null, $path = '', $expires = (60 * 60 * 24 * 7) )
+    {
+        global $_wp_additional_image_sizes;
+
+        if( strpos( $src, 'mfw-image-cache/' ) !== false ) {
+            return $src;
+        }
+
+        // prepare thumbnail destination
+        $wpUpload = wp_upload_dir();
+        $tmp = array(
+            $wpUpload['basedir'],
+            'mfw-image-cache',
+        );
+        if( $path ) {
+            $tmp[] = $path;
+            $path .= '/';
+        }
+        $cachePath = implode( DIRECTORY_SEPARATOR, $tmp );
+
+        // get width/height by thumbnail size
+        if( !is_array( $size ) ) {
+            if( in_array( $size, array( 'thumbnail', 'medium', 'large' ) ) ) {
+                $width  = get_option( $size .'_size_w' );
+                $height = get_option( $size .'_size_h' );
+                $crop   = is_null( $crop ) ? (get_option( $size .'_crop', null )) : $crop;
+                $crop   = is_null( $crop ) ? true : (bool) $crop;
+            }
+            else if( isset( $_wp_additional_image_sizes[ $size ] ) ) {
+                $width  = $_wp_additional_image_sizes[ $size ]['width'];
+                $height = $_wp_additional_image_sizes[ $size ]['height'];
+                $crop   = is_null( $crop ) ? $_wp_additional_image_sizes[ $size ]['crop'] : $crop;
+            }
+            // we don't know what the width/height of this is
+            else {
+                return $imageUrl;
+            }
+        }
+        else {
+            list( $width, $height ) = $size;
+            $crop = is_null( $crop ) ? true : $crop;
+        }                                                                                                             
+
+
+        // check if we already have the image cached and cache is still good
+        //$info = pathinfo( $imageUrl );
+        $info = array(
+            'filename'  => md5( $imageUrl ),
+            'extension' => preg_replace( '/^\./', '', image_type_to_extension( exif_imagetype( $imageUrl ) ) )
+        );
+        $info['extension'] = str_replace( 'jpeg', 'jpg', $info['extension'] );
+
+        if( !$info['filename'] || !$info['extension'] ) {
+            return $imageUrl;
+        }
+
+        $cacheFile = $cachePath . DIRECTORY_SEPARATOR ."{$info['filename']}-{$width}x{$height}.{$info['extension']}";
+
+        if( file_exists( $cacheFile ) && ((filemtime( $cacheFile ) + $expires) > time()) ) {
+            return $wpUpload['baseurl'] .'/mfw-image-cache/'. $path . basename( $cacheFile );
+        }
+
+
+        // CACHE DNE OR IS STALE SO LETS REDO IT
+
+        // prevent race condition on updating image
+        if( file_exists( $cacheFile ) ) {
+            @touch( $cacheFile );
+        }
+
+        // prepare editor/load remote image
+        $img = wp_get_image_editor( $imageUrl );
+        if( is_wp_error( $img ) || ($size == 'full') ) {
+            return $imageUrl;
+        }
+
+        // resize image
+        $img->resize( $width, $height, $crop );
+
+        // make storage directory
+        wp_mkdir_p( $cachePath );
+
+        // save image
+        $thumb = $img->save( $cacheFile );
+
+        if( is_wp_error( $thumb ) || !isset( $thumb['path'] ) ) {
+            return $imageUrl;
+        }
+
+        return $wpUpload['baseurl'] .'/mfw-image-cache/'. $path . $thumb['file'] .'?time='. time();
     }
 
 
