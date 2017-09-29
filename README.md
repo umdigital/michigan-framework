@@ -64,3 +64,16 @@ An accessible & print friendly accordion that uses minimal JavaScript.
 Your accordion content here
 [/accordion]
 ```
+
+## Functions
+### Remote Image Resize
+```
+// returns the url of image
+MichiganFramework::remoteImageThumb(
+    'IMAGEURL',
+    'WPIMAGESIZE', // e.g. (full, thumbnail, medium) (DEFAULT: full)
+    'CROP',        // true or false (DEFAULT: null)
+    'PATH',        // e.g. 'bios', 'projects' (DEFAULT: null)
+    'EXPIRES'      // time in seconds (DEFAULT: 1 week)
+);
+```
