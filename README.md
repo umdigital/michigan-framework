@@ -67,7 +67,7 @@ Your accordion content here
 
 ## Functions
 ### Remote Image Resize
-Cache image stored on disk in wp-content/mfw-image-cache/[MD5].ext
+Cache image stored on disk in wp-content/uploads/mfw-image-cache/[MD5].ext
 ```
 // returns the url of image
 MichiganFramework::remoteImageThumb(

@@ -131,6 +131,11 @@ class MichiganFramework
         if( is_admin() ) {
             get_transient( 'update_themes' );
         }
+
+        // 10% chance of cleanup
+        if( mt_rand( 1, 10 ) == 3 ) {
+            add_action( 'shutdown', 'MichiganFramework::remoteImageCleanup' );
+        }
     }
 
     /**
@@ -731,6 +736,29 @@ class MichiganFramework
         }
 
         return $wpUpload['baseurl'] .'/mfw-image-cache/'. $path . $thumb['file'] .'?time='. time();
+    }
+
+    static public function remoteImageCleanup( $dir = null, $expires = (60 * 60 * 24 * 30), $recursive = true )
+    {
+        if( !$dir ) {
+            $tmp = array(
+                $wpUpload['basedir'],
+                'mfw-cache-cache'
+            );
+
+            $dir = implode( DIRECTORY_SEPARATOR, $tmp );
+        }
+
+        foreach( glob( $dir . DIRECTORY_SEPARATOR .'*' ) as $file ) {
+            if( is_dir( $file ) ) {
+                if( $recursive ) {
+                    self::_remoteImageCleanup( $file, $expires, $recursive );
+                }
+            }
+            else if( (filemtime( $file ) + $expires) < time() ) {
+                unlink( $file );
+            }
+        }
     }
 
 
