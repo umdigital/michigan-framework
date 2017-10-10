@@ -646,9 +646,11 @@ class MichiganFramework
     }
 
 
-    static public function remoteImageThumb( $imageUrl, $size = 'full', $crop = null, $path = '', $expires = (60 * 60 * 24 * 7) )
+    static public function remoteImageThumb( $imageUrl, $size = 'full', $crop = null, $path = '', $expires = -1 )
     {
         global $_wp_additional_image_sizes;
+
+        $expires === -1 ? (60 * 60 * 24 * 7) : $expires;
 
         if( strpos( $src, 'mfw-image-cache/' ) !== false ) {
             return $src;
@@ -738,8 +740,10 @@ class MichiganFramework
         return $wpUpload['baseurl'] .'/mfw-image-cache/'. $path . $thumb['file'] .'?time='. time();
     }
 
-    static public function remoteImageCleanup( $dir = null, $expires = (60 * 60 * 24 * 30), $recursive = true )
+    static public function remoteImageCleanup( $dir = null, $expires = -1, $recursive = true )
     {
+        $expires === -1 ? (60 * 60 * 24 * 30) : $expires;
+
         if( !$dir ) {
             $tmp = array(
                 $wpUpload['basedir'],
