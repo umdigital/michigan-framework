@@ -1,7 +1,7 @@
 <?php header( 'X-UA-Compatible: IE=Edge' ); ?>
 <!doctype html>
-<!--[if lte IE 8]><html class="no-js lte-ie8" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if lte IE 8]><html class="no-js lte-ie8" <?php language_attributes(); ?>><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" <?php language_attributes(); ?>> <!--<![endif]-->
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
