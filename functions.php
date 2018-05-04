@@ -745,9 +745,10 @@ class MichiganFramework
         $expires === -1 ? (60 * 60 * 24 * 30) : $expires;
 
         if( !$dir ) {
+            $wpUpload = wp_upload_dir();
             $tmp = array(
                 $wpUpload['basedir'],
-                'mfw-cache-cache'
+                'mfw-image-cache'
             );
 
             $dir = implode( DIRECTORY_SEPARATOR, $tmp );
