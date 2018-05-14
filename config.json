@@ -27,10 +27,12 @@
     },
 
     "thumbnails": {
-        "example-thumb-key": {
+        "example-thumb-keys": {
+            "name"  : "Example Thumbnail",
             "width" : 1000,
             "height": 150,
-            "crop"  : true
+            "crop"  : true,
+            "admin" : true
         }
     },
 

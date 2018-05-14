@@ -114,6 +114,7 @@ class MichiganFramework
         if( !is_admin() ) {
             add_action( 'wp_before_admin_bar_render', 'MichiganFramework::adminBarRender' );
         }
+        add_filter( 'image_size_names_choose', 'MichiganFramework::adminImageSizes' );
 
         add_filter( 'body_class', 'MichiganFramework::bodyClass' );
         add_filter( 'excerpt_more', 'MichiganFramework::excerptMore' );
@@ -252,7 +253,7 @@ class MichiganFramework
             ksort( $files );
             foreach( $files as $key => $file ) {
                 $file = str_replace( CHILD_DIR, '', $file );
-                wp_enqueue_style( 'child-'. $key, CHILD_URL . $file, null, self::$_version );
+                wp_enqueue_style( 'child-'. $key, CHILD_URL . $file, null, filemtime( CHILD_DIR . $file ) );
             }
 
             $files = array();
@@ -262,7 +263,7 @@ class MichiganFramework
             ksort( $files );
             foreach( $files as $key => $file ) {
                 $file = str_replace( CHILD_DIR, '', $file );
-                wp_enqueue_script( 'child-'. $key, CHILD_URL . $file, array( 'jquery' ), self::$_version );
+                wp_enqueue_script( 'child-'. $key, CHILD_URL . $file, array( 'jquery' ), filemtime( CHILD_DIR . $file ) );
             }
         }
     }
@@ -372,6 +373,24 @@ class MichiganFramework
             ));
         }
     }
+
+
+    /**
+     * Add admin bar options if debug enabled
+     **/
+    static public function adminImageSizes( $sizes )
+    {
+        foreach( self::$_config['thumbnails'] as $key => $thumb ) {
+            if( ($key == 'example-thumb-key') || (isset( $thumb['admin'] ) && !$thumb['admin']) ) {
+                continue;
+            }
+
+            $sizes[ $key ] = isset( $thumb['name'] ) ? $thumb['name'] : ucwords( str_replace( '-', ' ', $key ) );
+        }
+
+        return $sizes;
+    }
+
 
     /**
      * Check if an area is enabled or not
