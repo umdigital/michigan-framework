@@ -94,19 +94,36 @@
 
                 // if accordion should be shown, set maxheight
                 if( $(this).is(':checked') ) {
+                    $(this).parent().find('> label').attr(
+                        'aria-expanded', 'true'
+                    );
+
                     thisContent.css({
                         'maxHeight': thisContent.data('maxheight')
                     });
                 }
                 // reset maxheight to default
                 else {
+                    $(this).parent().find('> label').attr(
+                        'aria-expanded', 'false'
+                    );
+
                     thisContent.css({
                         'maxHeight': ''
                     });
                 }
             });
+
             // handle keyboard accessibility
+            $('.mfw-accordion > input[type="checkbox"]').keydown(function( event ){
+                if( event.which === 13 ) {
+                    event.preventDefault();
+
+                    $(this).trigger('click');
+                }
+            });
             $('.mfw-accordion > label').keydown(function( event ){
+                console.log( 'label' );
                 if( (event.which === 13) || (event.which === 32) ) {
                     event.preventDefault();
 

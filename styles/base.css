@@ -152,9 +152,10 @@
     max-height: 0;
     overflow: hidden;
     z-index: 10;
+    visibility: hidden;
 }
 .mfw-accordion > .mfw-accordion-content-wrap.transition {
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 .mfw-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
     padding: 1em;
@@ -162,7 +163,8 @@
 
 .mfw-accordion > input[type="checkbox"]:checked ~ .mfw-accordion-content-wrap {
     max-height: 999999px;
-    transition: max-height 0.5s ease-in-out;
+    transition: max-height 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    visibility: visible;
 }
 
 @media print {

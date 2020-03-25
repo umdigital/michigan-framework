@@ -623,19 +623,21 @@ class MichiganFramework
      */
     static public function shortcodeAccordion( $atts, $content = null )
     {
+        self::$_accordions++;
+
         $atts = shortcode_atts(array(
             'title' => 'ACCORDION NEEDS TITLE ATTRIBUTE',
-            'class' => ''
+            'id'    => 'mfw-accordion-'. self::$_accordions,
+            'class' => '',
+            'state' => ''
         ), $atts );
         $atts['title'] = $atts['title'] ?: 'ACCORDION NEEDS TITLE ATTRIBUTE';
 
-        self::$_accordions++;
-
         return '
-        <div id="mfw-accordion-'. self::$_accordions .'" class="mfw-accordion '. $atts['class'] .'">
-            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" />
-            <label for="mfw-accordion-action-'. self::$_accordions .'" role="tab">'. $atts['title'] .'</label>
-            <div class="mfw-accordion-content-wrap" role="tabpanel"><div class="mfw-accordion-content">'. do_shortcode( $content ) .'</div></div>
+        <div id="'. $atts['id'] .'" class="mfw-accordion '. $atts['class'] .'">
+            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" '. ($atts['state'] == 'opened' ? 'checked="checked"' : null) .' />
+            <label for="mfw-accordion-action-'. self::$_accordions .'" role="heading" aria-level="6"><span id="mfw-accordion-action-button-'. self::$_accordions .'" role="button" aria-controls="mfw-accordion-content-'. self::$_accordions .'" aria-expanded="'. ($atts['state'] == 'opened' ? 'true' : 'false' ) .'">'. $atts['title'] .'</span></label>
+            <div id="mfw-accordion-content-'. self::$_accordions .'" class="mfw-accordion-content-wrap" role="region" aria-labelledby="mfw-accordion-action-button-'. self::$_accordions .'"><div class="mfw-accordion-content">'. do_shortcode( $content ) .'</div></div>
         </div>
         ';
     }
