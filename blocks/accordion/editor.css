@@ -1,0 +1,30 @@
+.mfw-accordion {
+    border: 1px dashed #ccc;
+}
+.mfw-accordion > label {
+    position: relative;
+    display: block;
+    padding: 5px 30px 5px 5px;
+    line-height: 1;
+    border: 1px solid #efefef;
+    background-color: #efefef;
+}
+.mfw-accordion > label:after {
+    content: "\f156";
+    font-family: dashicons;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: none;
+    text-rendering: auto;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -.6rem;
+}
+.mfw-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
+    padding: 0 1em;
+}

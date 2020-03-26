@@ -125,6 +125,38 @@ class MichiganFramework
         // ADD SHORTCODES
         add_shortcode( 'accordion', 'MichiganFramework::shortcodeAccordion' );
 
+        // ADD EDITOR BLOCKS
+        add_action( 'init', function(){
+            if( function_exists( 'register_block_type' ) ) {
+                // accordion block
+                wp_register_style(
+                    'michigan-framework--accordion-ed-css',
+                    PARENT_URL . '/blocks/accordion/editor.css',
+                    array(),
+                    filemtime( PARENT_DIR . '/blocks/accordion/editor.css' )
+                );
+                wp_register_script(
+                    'michigan-framework--accordion-ed-js',
+                    PARENT_URL . '/blocks/accordion/editor.js',
+                    array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+                    filemtime( PARENT_DIR . '/blocks/accordion/editor.js' )
+                );
+                register_block_type( 'michigan-framework/accordion', array(
+                    'editor_style'    => 'michigan-framework--accordion-ed-css',
+                    'editor_script'   => 'michigan-framework--accordion-ed-js',
+                    'render_callback' => function( $atts, $content ) {
+                        self::$_accordions++;
+
+                        return str_replace(
+                            array( ' state="opened"', ' state=""', '{{ID}}' ),
+                            array( ' checked="checked"', '', self::$_accordions ),
+                            $content
+                        );
+                    }
+                ));
+            }
+        });
+
 
         // THEME UPDATE HOOKS
         add_filter( 'pre_set_site_transient_update_themes', 'MichiganFramework::_updateCheck' );
