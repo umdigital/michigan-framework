@@ -89,14 +89,6 @@
                                     className: 'mfw-accordion-content'
                                 },
                                 wp.element.createElement( wp.blockEditor.InnerBlocks, {
-                                    allowedBlocks: [
-                                        'core/image',
-                                        'core/heading',
-                                        'core/list',
-                                        'core/paragraph',
-                                        'core/quote',
-                                        'core/table'
-                                    ],
                                     template: [
                                         ['core/paragraph', {
                                             placeholder: 'Accordion Content',
