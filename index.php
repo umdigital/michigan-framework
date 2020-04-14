@@ -2,7 +2,7 @@
 
 global $post;
 
-if( !is_front_page() ) {
+if( is_front_page() ) {
     get_template_part( 'templates/homepage' );
 }
 else {

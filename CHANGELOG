@@ -1,3 +1,10 @@
+1.3.2 (2020-04-14)
+==================
+bugfix: thumbnail config default
+bugfix: index.php front page check fix
+enhancement: better theme dir detection, supports for grandchild theme capability
+enhancement: always show filter for widget area (default true)
+
 1.3.1 (2020-04-01)
 ==================
 Remove allowedBlocks accordion restriction

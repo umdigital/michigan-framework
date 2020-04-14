@@ -21,9 +21,9 @@ class MichiganFramework
 
     static private $_gitUpdate = array(
         'dir' => 'michigan-framework',
-        'url' => 'https://github.com/umichcreative/michigan-framework',
-        'zip' => 'https://github.com/umichcreative/michigan-framework/zipball/master',
-        'raw' => 'https://raw.githubusercontent.com/umichcreative/michigan-framework/master',
+        'url' => 'https://github.com/umdigital/michigan-framework',
+        'zip' => 'https://github.com/umdigital/michigan-framework/zipball/master',
+        'raw' => 'https://raw.githubusercontent.com/umdigital/michigan-framework/master',
     );
 
     /**
@@ -32,7 +32,7 @@ class MichiganFramework
     static public function init()
     {
         // just in case it wasn't installed with the intended name
-        self::$_gitUpdate['dir'] = get_option( 'template' );
+        self::$_gitUpdate['dir'] = basename( __DIR__ );
 
         // get current version
         $theme = wp_get_theme( self::$_gitUpdate['dir'] );
@@ -549,15 +549,24 @@ class MichiganFramework
     /**
      * Check if widget is enabled and display with wrapping element w/grid classes
      */
-    static public function displayWidget( $widget )
+    static public function displayWidget( $widget, $alwaysShow = true )
     {
         if( !($status = self::areaEnabled( 'widgets:'. $widget )) ) {
             return;
         }
 
-        echo '<div id="widget-'. $widget .'" class="'. self::getColumns( 'widgets:'. $widget ) .' columns '.( is_string( $status ) ? $status : null).'">';
+        $alwaysShow = apply_filters( 'mfw-displaywidget_always-show', $alwaysShow );
+
+        ob_start();
         dynamic_sidebar( $widget );
-        echo '</div>';
+        $html = ob_get_clean();
+
+        if( $alwaysShow || $html ) {
+            echo '<div id="widget-'. $widget .'" class="'. self::getColumns( 'widgets:'. $widget ) .' columns '.( is_string( $status ) ? $status : null).'">'. $html .'</div>';
+        }
+        else {
+            self::setConfig( 'widgets', $widget, 'enabled', 0 );
+        }
     }
 
     /**
@@ -839,7 +848,7 @@ class MichiganFramework
         }
 
         if( $version && version_compare( $version, self::$_version ) ) {
-            $checkedData->response[ get_option( 'template' ) ] = array(
+            $checkedData->response[ self::$_gitUpdate['dir'] ] = array(
                 'package'     => self::$_gitUpdate['zip'],
                 'new_version' => $version,
                 'url'         => self::$_gitUpdate['url']

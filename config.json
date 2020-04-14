@@ -27,7 +27,7 @@
     },
 
     "thumbnails": {
-        "example-thumb-keys": {
+        "example-thumb-key": {
             "name"  : "Example Thumbnail",
             "width" : 1000,
             "height": 150,
