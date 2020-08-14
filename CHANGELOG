@@ -1,3 +1,7 @@
+1.3.3 (2020-08-14)
+==================
+bugfix: WP 5.5 jQuery migrate compatability fix
+
 1.3.2 (2020-04-14)
 ==================
 bugfix: thumbnail config default

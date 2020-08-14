@@ -26,6 +26,7 @@
             $('img').removeAttr('height').removeAttr('width');
         }
 
+        /*
         if( $.browser.msie && (parseInt( $.browser.version ) == 8) ) {
             // IE font race condition fix
             var head = document.getElementsByTagName('head')[0],
@@ -37,6 +38,7 @@
                 head.removeChild( style );
             }, 0);
         }
+        */
 
         // placeholder support for older browsers
         $('input').placeholder();
