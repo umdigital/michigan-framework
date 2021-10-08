@@ -13,7 +13,7 @@
 
     <?php get_template_part( 'templates/section-custom/before-footer' ); ?>
 
-    <div id="section-footer">
+    <div id="section-footer" role="footer">
         <?php get_template_part( 'templates/section-footer/prefix' ); ?>
 
         <div id="zone-footer">

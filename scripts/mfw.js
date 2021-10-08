@@ -96,7 +96,7 @@
 
                 // if accordion should be shown, set maxheight
                 if( $(this).is(':checked') ) {
-                    $(this).parent().find('> label').attr(
+                    $(this).parent().find('> label > span').attr(
                         'aria-expanded', 'true'
                     );
 
@@ -106,7 +106,7 @@
                 }
                 // reset maxheight to default
                 else {
-                    $(this).parent().find('> label').attr(
+                    $(this).parent().find('> label > span').attr(
                         'aria-expanded', 'false'
                     );
 

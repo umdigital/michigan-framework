@@ -147,11 +147,55 @@ class MichiganFramework
                     'render_callback' => function( $atts, $content ) {
                         self::$_accordions++;
 
-                        return str_replace(
-                            array( ' state="opened"', ' state=""', '{{ID}}' ),
-                            array( ' checked="checked"', '', self::$_accordions ),
-                            $content
-                        );
+                        // rendered HTML saved in database (old way)
+                        if( strpos( $content, '{{ID}}' ) !== false ) {
+                            $content = preg_replace(
+                                '#<input([^>]*)/?>#',
+                                '<input$1 aria-hidden="true" />',
+                                $content
+                            );
+
+                            return str_replace(
+                                array( ' state="opened"', ' state=""', '{{ID}}' ),
+                                array( ' checked="checked"', '', self::$_accordions ),
+                                $content
+                            );
+                        }
+                        else {
+                            $atts = array_merge(array(
+                                'id'        => 'mfw-accordion-'. self::$_accordions,
+                                'title'     => 'Accordion Title',
+                                'state'     => '',
+                                'className' => ''
+                            ), $atts );
+
+                            $templateVars = array(
+                                '{{ID}}'        => self::$_accordions,
+                                '{{BLOCK_ID}}'  => $atts['id'],
+                                '{{STATE}}'     => ($atts['state'] == 'opened' ? 'checked="checked"' : null),
+                                '{{TITLE}}'     => $atts['title'],
+                                '{{CONTENT}}'   => $content,
+                                '{{CLASSNAME}}' => $atts['className']
+                            );
+
+                            $template = '
+                            <div class="wp-block-michigan-framework-accordion mfw-accordion {{CLASSNAME}}" id="{{BLOCK_ID}}">
+                                <input id="mfw-accordion-action-{{ID}}" type="checkbox" {{STATE}}>
+                                <label for="mfw-accordion-action-{{ID}}" role="heading" aria-level="6">
+                                    <span class="mfw-accordion-title" id="mfw-accordion-action-button-{{ID}}" role="button" aria-controls="mfw-accordion-content-{{ID}}" aria-expanded="true">{{TITLE}}</span>
+                                </label>
+                                <div class="mfw-accordion-content-wrap transition" id="mfw-accordion-content-{{ID}}" role="region" aria-labelledby="mfw-accordion-action-button-{{ID}}" style="">
+                                    <div class="mfw-accordion-content">{{CONTENT}}</div>
+                                </div>
+                            </div>
+                            ';
+
+                            return str_replace(
+                                array_keys( $templateVars ),
+                                array_values( $templateVars ),
+                                $template
+                            );
+                        }
                     }
                 ));
             }
@@ -676,7 +720,7 @@ class MichiganFramework
 
         return '
         <div id="'. $atts['id'] .'" class="mfw-accordion '. $atts['class'] .'">
-            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" '. ($atts['state'] == 'opened' ? 'checked="checked"' : null) .' />
+            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" '. ($atts['state'] == 'opened' ? 'checked="checked"' : null) .' aria-hidden="true" />
             <label for="mfw-accordion-action-'. self::$_accordions .'" role="heading" aria-level="6"><span id="mfw-accordion-action-button-'. self::$_accordions .'" role="button" aria-controls="mfw-accordion-content-'. self::$_accordions .'" aria-expanded="'. ($atts['state'] == 'opened' ? 'true' : 'false' ) .'">'. $atts['title'] .'</span></label>
             <div id="mfw-accordion-content-'. self::$_accordions .'" class="mfw-accordion-content-wrap" role="region" aria-labelledby="mfw-accordion-action-button-'. self::$_accordions .'"><div class="mfw-accordion-content">'. do_shortcode( $content ) .'</div></div>
         </div>

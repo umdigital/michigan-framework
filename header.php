@@ -17,7 +17,7 @@
 
     <?php get_template_part( 'templates/section-custom/before-header' ); ?>
 
-    <div id="section-header">
+    <div id="section-header" role="header">
         <?php get_template_part( 'templates/section-header/prefix' ); ?>
 
         <div id="zone-header-branding">
@@ -41,7 +41,7 @@
         <?php get_template_part( 'templates/section-header/postfix' ); ?>
 
         <?php if( has_nav_menu( 'header-menu', 'michigan_framework' ) ): ?>
-        <div id="zone-header-menu">
+        <div id="zone-header-menu" role="navigation" aria-label="Main Menu">
             <div class="row">
                 <div class="<?php echo MichiganFramework::getColumns( 'menus:header_menu' );?> columns mfwMenu">
                     <a href="javascript:void();" class="hamburger-header"><h3><i class="fa fa-bars"></i>Menu</h3></a>
@@ -62,7 +62,7 @@
 
     <?php get_template_part( 'templates/section-custom/before-content' ); ?>
 
-    <div id="section-content">
+    <div id="section-content" role="main">
         <?php get_template_part( 'templates/section-content/prefix' ); ?>
 
         <div id="zone-content">
