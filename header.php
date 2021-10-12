@@ -17,7 +17,7 @@
 
     <?php get_template_part( 'templates/section-custom/before-header' ); ?>
 
-    <div id="section-header" role="header">
+    <div id="section-header" role="banner">
         <?php get_template_part( 'templates/section-header/prefix' ); ?>
 
         <div id="zone-header-branding">
