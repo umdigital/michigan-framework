@@ -17,7 +17,6 @@ class MichiganFramework
     static private $_fontAwesomeVersion = '4.7.0';
 
     static private $_config             = array();
-    static private $_accordions         = 0;
 
     static private $_gitUpdate = array(
         'dir' => 'michigan-framework',
@@ -122,82 +121,20 @@ class MichiganFramework
         // ALLOW SHORTCODES IN TEXT WIDGET
         add_filter('widget_text', 'do_shortcode');
 
-        // ADD SHORTCODES
-        add_shortcode( 'accordion', 'MichiganFramework::shortcodeAccordion' );
-
         // ADD EDITOR BLOCKS
         add_action( 'init', function(){
             if( function_exists( 'register_block_type' ) ) {
-                // accordion block
-                wp_register_style(
-                    'michigan-framework--accordion-ed-css',
-                    PARENT_URL . '/blocks/accordion/editor.css',
-                    array(),
-                    filemtime( PARENT_DIR . '/blocks/accordion/editor.css' )
-                );
-                wp_register_script(
-                    'michigan-framework--accordion-ed-js',
-                    PARENT_URL . '/blocks/accordion/editor.js',
-                    array( 'wp-blocks', 'wp-element', 'wp-editor' ),
-                    filemtime( PARENT_DIR . '/blocks/accordion/editor.js' )
-                );
-                register_block_type( 'michigan-framework/accordion', array(
-                    'editor_style'    => 'michigan-framework--accordion-ed-css',
-                    'editor_script'   => 'michigan-framework--accordion-ed-js',
-                    'render_callback' => function( $atts, $content ) {
-                        self::$_accordions++;
-
-                        // rendered HTML saved in database (old way)
-                        if( strpos( $content, '{{ID}}' ) !== false ) {
-                            $content = preg_replace(
-                                '#<input([^>]*)/?>#',
-                                '<input$1 aria-hidden="true" />',
-                                $content
-                            );
-
-                            return str_replace(
-                                array( ' state="opened"', ' state=""', '{{ID}}' ),
-                                array( ' checked="checked"', '', self::$_accordions ),
-                                $content
-                            );
-                        }
-                        else {
-                            $atts = array_merge(array(
-                                'id'        => 'mfw-accordion-'. self::$_accordions,
-                                'title'     => 'Accordion Title',
-                                'state'     => '',
-                                'className' => ''
-                            ), $atts );
-
-                            $templateVars = array(
-                                '{{ID}}'        => self::$_accordions,
-                                '{{BLOCK_ID}}'  => $atts['id'],
-                                '{{STATE}}'     => ($atts['state'] == 'opened' ? 'checked="checked"' : null),
-                                '{{TITLE}}'     => $atts['title'],
-                                '{{CONTENT}}'   => $content,
-                                '{{CLASSNAME}}' => $atts['className']
-                            );
-
-                            $template = '
-                            <div class="wp-block-michigan-framework-accordion mfw-accordion {{CLASSNAME}}" id="{{BLOCK_ID}}">
-                                <input id="mfw-accordion-action-{{ID}}" type="checkbox" {{STATE}}>
-                                <label for="mfw-accordion-action-{{ID}}" role="heading" aria-level="6">
-                                    <span class="mfw-accordion-title" id="mfw-accordion-action-button-{{ID}}" role="button" aria-controls="mfw-accordion-content-{{ID}}" aria-expanded="true">{{TITLE}}</span>
-                                </label>
-                                <div class="mfw-accordion-content-wrap transition" id="mfw-accordion-content-{{ID}}" role="region" aria-labelledby="mfw-accordion-action-button-{{ID}}" style="">
-                                    <div class="mfw-accordion-content">{{CONTENT}}</div>
-                                </div>
-                            </div>
-                            ';
-
-                            return str_replace(
-                                array_keys( $templateVars ),
-                                array_values( $templateVars ),
-                                $template
-                            );
+                $blockDirs = apply_filters( 'mfw-block-directories', array(
+                    PARENT_DIR .'/blocks/',
+                    CHILD_DIR .'/blocks/'
+                ));
+                foreach( $blockDirs as $blockDir ) {
+                    foreach( glob( rtrim( $blockDir, '/' ) .'/*',  GLOB_ONLYDIR ) as $block ) {
+                        if( is_file( "{$block}/block.php" ) ) {
+                            include_once "{$block}/block.php";
                         }
                     }
-                ));
+                }
             }
         });
 
@@ -703,34 +640,10 @@ class MichiganFramework
         return $mimes;
     }
 
-    /**
-     * Accordion Shortcode
-     */
-    static public function shortcodeAccordion( $atts, $content = null )
-    {
-        self::$_accordions++;
-
-        $atts = shortcode_atts(array(
-            'title' => 'ACCORDION NEEDS TITLE ATTRIBUTE',
-            'id'    => 'mfw-accordion-'. self::$_accordions,
-            'class' => '',
-            'state' => ''
-        ), $atts );
-        $atts['title'] = $atts['title'] ?: 'ACCORDION NEEDS TITLE ATTRIBUTE';
-
-        return '
-        <div id="'. $atts['id'] .'" class="mfw-accordion '. $atts['class'] .'">
-            <input id="mfw-accordion-action-'. self::$_accordions .'" type="checkbox" '. ($atts['state'] == 'opened' ? 'checked="checked"' : null) .' aria-hidden="true" />
-            <label for="mfw-accordion-action-'. self::$_accordions .'" role="heading" aria-level="6"><span id="mfw-accordion-action-button-'. self::$_accordions .'" role="button" aria-controls="mfw-accordion-content-'. self::$_accordions .'" aria-expanded="'. ($atts['state'] == 'opened' ? 'true' : 'false' ) .'">'. $atts['title'] .'</span></label>
-            <div id="mfw-accordion-content-'. self::$_accordions .'" class="mfw-accordion-content-wrap" role="region" aria-labelledby="mfw-accordion-action-button-'. self::$_accordions .'"><div class="mfw-accordion-content">'. do_shortcode( $content ) .'</div></div>
-        </div>
-        ';
-    }
-
     static public function shortcodeEmptyParagraphFix( $content )
     {
         // define your shortcodes to filter, '' filters all shortcodes
-        $shortcodes = apply_filters( 'mfw-shortcode-paragraphfix', array( 'accordion' ) );
+        $shortcodes = apply_filters( 'mfw-shortcode-paragraphfix', array() );
 
         foreach( $shortcodes as $shortcode ) {
             $array = array (

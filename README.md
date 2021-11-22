@@ -33,7 +33,6 @@ Header Menu: *This menu is positioned between section-header and section-content
 
 ### Widgets
 A widget location will not render if no widgets have been assigned to the location.
-@TODO: create config.json option to force render of a location even if no widgets have been assigned
 
 
 ### Menus
@@ -56,9 +55,12 @@ This is where the default page, posts, and homepage templates live.  Also for cu
 - Place JavaScript within /scripts/*.js to have them autoloaded into the theme
 - NOTE: The files will be loaded in alphabetical order
 
-## Shortcodes
+## Blocks/Shortcodes
+Custom blocks will be autoloaded in /blocks/\*/block.php automatically
 ### Accordion
 An accessible & print friendly accordion that uses minimal JavaScript.
+
+#### Shortcode example
 ```
 [accordion title="Title of Accordion" class="addtional-css-classes-to-add"]
 Your accordion content here
