@@ -101,7 +101,7 @@ class MichiganFramework
 
         // REGISTER ACTIONS/FILTERS
         add_action( 'after_setup_theme', 'MichiganFramework::setupTheme' );
-        add_action( 'wp_enqueue_scripts', 'MichiganFramework::enqueue', 1 );
+        add_action( 'wp_enqueue_scripts', 'MichiganFramework::enqueue' );
         add_action( 'wp_head', 'MichiganFramework::wpHead', 99 );
         add_action( 'wp_footer', 'MichiganFramework::wpFooter', 99 );
         add_filter( 'posts_join', 'MichiganFramework::searchJoin' );
@@ -175,10 +175,14 @@ class MichiganFramework
         add_theme_support( 'post-thumbnails' );
 
         // add thumbnail sizes
+        global $newImageSizes;
+        $newImageSizes = array();
         foreach( self::$_config['thumbnails'] as $key => $thumb ) {
             if( $key == 'example-thumb-key' ) {
                 continue;
             }
+
+            $newImageSizes[ $key ] = $key;
 
             add_image_size(
                 $key,
@@ -187,6 +191,11 @@ class MichiganFramework
                 $thumb['crop']
             );
         }
+
+        add_filter( 'image_size_names_choose', function( $sizes ){
+            global $newImageSizes;
+            return array_merge( $sizes, $newImageSizes );
+        });
 
         /**
          * This feature enables custom-menus support for a theme.
