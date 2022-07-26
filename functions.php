@@ -139,6 +139,27 @@ class MichiganFramework
         });
 
 
+        // ADD EDITOR PATTERNS
+        add_action( 'init', function(){
+            if( function_exists( 'register_block_pattern' ) ) {
+                $patternDirs = apply_filters( 'mfw-block-pattern-directories', array(
+                    PARENT_DIR .'/block-patterns/',
+                    CHILD_DIR .'/block-patterns/'
+                ));
+                foreach( $patternDirs as $patternDir ) {
+                    foreach( glob( rtrim( $patternDir, '/' ) .'/*.php' ) as $pattern ) {
+                        if( is_file( "{$pattern}" ) ) {
+                            register_block_pattern(
+                                basename( dirname( dirname( $pattern ) ) ) .'/'. preg_replace( '#\..+$#', '', basename( $pattern ) ),
+                                require $pattern
+                            );
+                        }
+                    }
+                }
+            }
+        });
+
+
         // THEME UPDATE HOOKS
         add_filter( 'pre_set_site_transient_update_themes', 'MichiganFramework::_updateCheck' );
         add_filter( 'upgrader_source_selection', 'MichiganFramework::_updateSource', 10, 3 );

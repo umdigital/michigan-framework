@@ -1,0 +1,15 @@
+<?php
+
+/** NOTES:
+  * - file should be named {MYPATTERN}.php
+  * - if a custom category is needed use register_block_pattern_category() in child theme functions.php in "init" hook
+  * - see full pattern confg at: https://developer.wordpress.org/block-editor/reference-guides/block-api/block-patterns/
+ **/
+
+return array(
+    'title'       => '',
+    'categories'  => array( '' ),
+    'description' => '',
+    'keywords'    => '',
+    'content'     => ''
+);
