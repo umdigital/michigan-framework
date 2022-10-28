@@ -91,7 +91,7 @@ class Theme_MichiganFramework_Block_Accordion
             '{{STATE}}'     => ($config['state'] == 'opened' ? 'checked="checked"' : null),
             '{{TITLE}}'     => $config['title'],
             '{{CONTENT}}'   => $content,
-            '{{CLASSNAME}}' => $config['class']
+            '{{CLASSNAME}}' => $config['className']
         );
 
         $template = '
