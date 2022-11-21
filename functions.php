@@ -203,6 +203,12 @@ class MichiganFramework
                 continue;
             }
 
+            $thumb = array_merge(array(
+                'width'  => null,
+                'height' => null,
+                'crop'   => null
+            ), $thumb );
+
             $newImageSizes[ $key ] = $key;
 
             add_image_size(
