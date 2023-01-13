@@ -154,6 +154,6 @@
             $(window).resize(function(){
                 recalcAccordions()
             });
-        });
+        }).trigger('load');
     });
 }(jQuery));
