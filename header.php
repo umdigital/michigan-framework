@@ -44,7 +44,7 @@
         <div id="zone-header-menu" role="navigation" aria-label="Main Menu">
             <div class="row">
                 <div class="<?php echo MichiganFramework::getColumns( 'menus:header_menu' );?> columns mfwMenu">
-                    <a href="javascript:void();" class="hamburger-header"><h3><i class="fa fa-bars"></i>Menu</h3></a>
+                    <a href="javascript:void(0);" class="hamburger-header"><h3><i class="fa fa-bars"></i>Menu</h3></a>
                      <?php wp_nav_menu(apply_filters( 'mfw-header-menu', array(
                         'container'      => '',
                         'fallback_cb'    => false,

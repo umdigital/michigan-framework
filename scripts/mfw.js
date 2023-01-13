@@ -60,7 +60,7 @@
         });
 
         // wait for assets to load
-        $(window).on('load', function(){
+        $(window).one('load', function(){
             // RESPONSIVE MENU
             var mainMenuWrap = $('#zone-header-menu .mfwMenu');
             var mainMenuList = mainMenuWrap.find('.header-menu');
@@ -85,7 +85,9 @@
                 }
             }).trigger('resize');
 
-            $(document).on('click', '#zone-header-menu .hamburger-header', function(){
+            $(document).on('click', '#zone-header-menu .hamburger-header', function( event ){
+                event.preventDefault();
+
                 mainMenuList.slideToggle();
             });
 
