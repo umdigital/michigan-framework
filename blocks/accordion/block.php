@@ -59,7 +59,7 @@ class Theme_MichiganFramework_Block_Accordion
         add_shortcode( 'accordion', function( $atts, $content = null ){
             self::$_accordions++;
 
-            $atts = array_merge(array(
+            $atts = shortcode_atts(array(
                 'title' => 'Accordion Title: Needs Attribute'
             ), $atts );
 

@@ -105,6 +105,13 @@
                     thisContent.css({
                         'maxHeight': thisContent.data('maxheight')
                     });
+
+                    if( typeof gtag != 'undefined' ) {
+                        gtag( 'event', 'click', {
+                            'event_category': 'Accordion',
+                            'event_label'   : $(this).closest('.mfw-accordion').find('.mfw-accordion-title').text()
+                        });
+                    }
                 }
                 // reset maxheight to default
                 else {
