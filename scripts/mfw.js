@@ -158,6 +158,12 @@
                     }
                 });
             };
+            $(window).on('hashchange', function(){
+                $( window.location.hash +'.mfw-accordion > input[type="checkbox"]:not(:checked)' ).trigger('click');
+            });
+            if( window.location.hash ) {
+                $(window).trigger('hashchange');
+            }
             recalcAccordions();
 
             $(window).resize(function(){
