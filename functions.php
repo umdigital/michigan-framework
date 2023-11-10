@@ -14,7 +14,7 @@ class MichiganFramework
 {
     static private $_version            = 1.0;
     static private $_foundationVersion  = '6.2.3';
-    static private $_fontAwesomeVersion = '4.7.0';
+    static private $_fontAwesomeVersion = '6.4.2';
 
     static private $_config             = array();
 
@@ -102,8 +102,6 @@ class MichiganFramework
         // REGISTER ACTIONS/FILTERS
         add_action( 'after_setup_theme', 'MichiganFramework::setupTheme' );
         add_action( 'wp_enqueue_scripts', 'MichiganFramework::enqueue' );
-        add_action( 'wp_head', 'MichiganFramework::wpHead', 99 );
-        add_action( 'wp_footer', 'MichiganFramework::wpFooter', 99 );
         add_filter( 'posts_join', 'MichiganFramework::searchJoin' );
         add_filter( 'posts_where', 'MichiganFramework::searchWhere' );
         add_filter( 'posts_distinct', 'MichiganFramework::searchDistinct' );
@@ -281,7 +279,11 @@ class MichiganFramework
         // vendor assets
         wp_enqueue_style( 'foundation-base', PARENT_URL .'/vendor/foundation-'. self::$_foundationVersion .'/'. self::$_config['grid'] .'col/foundation.min.css', null, self::$_foundationVersion );
 
-        wp_enqueue_style( 'font-awesome', PARENT_URL .'/vendor/font-awesome-'. self::$_fontAwesomeVersion .'/css/font-awesome.min.css', null, self::$_fontAwesomeVersion );
+        wp_enqueue_style( 'font-awesome', PARENT_URL .'/vendor/fontawesome-free-'. self::$_fontAwesomeVersion .'-web/css/all.min.css', null, self::$_fontAwesomeVersion );
+        if( !isset( self::$_config['fontawesome']['v4-shims'] ) || self::$_config['fontawesome']['v4-shims'] ) {
+            wp_enqueue_style( 'font-awesome-v4shims', PARENT_URL .'/vendor/fontawesome-free-'. self::$_fontAwesomeVersion .'-web/css/v4-shims.min.css', null, self::$_fontAwesomeVersion );
+        }
+
         wp_enqueue_script( 'jq-placeholder', PARENT_URL .'/vendor/scripts/jquery.placeholder.js', array( 'jquery' ), self::$_version );
 
         wp_enqueue_style( 'mfw-base', PARENT_URL .'/styles/base.css', null, self::$_version );
@@ -315,32 +317,6 @@ class MichiganFramework
                 wp_enqueue_script( 'child-'. $key, CHILD_URL . $file, array( 'jquery' ), filemtime( CHILD_DIR . $file ) );
             }
         }
-    }
-
-    /**
-     * ADD HEADER IE CONDITIONALS
-     **/
-    static public function wpHead()
-    {
-        echo '
-        <!--[if lt IE 9]>
-            <link rel="stylesheet" href="'. PARENT_URL .'/vendor/foundation-ie8/'. self::$_config['grid'] .'col.css" />
-            <link rel="stylesheet" href="'. PARENT_URL .'/styles/base-ie8.css" />
-        <![endif]-->
-        ';
-    }
-
-    /**
-     * ADD FOOTER IE CONDITIONALS
-     **/
-    static public function wpFooter()
-    {
-        echo '
-        <!--[if lt IE 9]>
-            <script src="'. PARENT_URL .'/vendor/scripts/rem.js" type="text/javascript"></script>
-        <![endif]-->
-        ';
-
     }
 
     /**

@@ -12,6 +12,10 @@
         "widgets": true
     },
 
+    "fontawesome": {
+        "v4-shims": true
+    },
+
     "search": {
         "duplicates" : false,
         "meta-keys": [
