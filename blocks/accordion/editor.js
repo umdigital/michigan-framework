@@ -25,7 +25,7 @@
                     wp.element.Fragment,
                     null,
                     wp.element.createElement(
-                        wp.editor.InspectorControls,
+                        wp.blockEditor.InspectorControls,
                         null,
                         wp.element.createElement(
                             wp.components.PanelBody, {

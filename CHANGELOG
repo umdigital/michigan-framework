@@ -1,3 +1,7 @@
+1.4.1 (2023-12-21)
+===================
+updated deprecated guteberg api
+
 1.4.0 (2023-11-10)
 ===================
 Upgrade Fontawesome to 6.4.2 with v4 backwards compatilibity support
