@@ -1,1 +1,1 @@
-<?MichiganFramework::displayWidget( 'header' );?>
+<?php MichiganFramework::displayWidget( 'header' ); ?>
