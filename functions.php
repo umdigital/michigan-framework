@@ -845,7 +845,7 @@ class MichiganFramework
         }
 
         // Rename source
-        $destination = trailingslashit( $remote ) . self::$_gitUpdate['dir'];
+        $destination = trailingslashit( $remote ) . trailingslashit( self::$_gitUpdate['dir'] );
         if( $wp_filesystem->move( $source, $destination, true ) ) {
             return $destination;
         }
