@@ -12,7 +12,7 @@
 <body <?php body_class(); ?>>
 <?php MichiganFramework::getGridOverlay(); ?>
 <div id="wrapper">
-    <a class="skip-link screen-reader-text" href="#section-content">Skip to content</a>
+    <a class="skip-link" href="#section-content">Skip to content</a>
 
     <?php get_template_part( 'templates/section-custom/before-header' ); ?>
 

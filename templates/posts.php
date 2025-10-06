@@ -6,7 +6,9 @@
     <?php while (have_posts()) : the_post(); ?>
 
     <li class="postWrapper" id="post-<?php the_ID(); ?>">
+        <?php if( get_the_title() ): ?>
         <h2 class="postTitle"><?php if( !is_single() ): ?><a href="<?php the_permalink() ?>" rel="bookmark"><?php endif; ?><?php the_title(); ?><?php if( !is_single() ): ?></a><?php endif; ?></h2>
+        <?php endif; ?>
         <small><?php the_date(); ?></small>
 
         <div class="post"><?php the_content(__('(more...)')); ?></div>

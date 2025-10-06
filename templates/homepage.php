@@ -11,7 +11,9 @@
     <?php endif; ?>
 
     <div class="postWrapper" id="post-<?php the_ID(); ?>">
+        <?php if( get_the_title() ): ?>
         <h2 class="postTitle"><?php the_title(); ?></h2>
+        <?php endif; ?>
         <div class="post"><?php the_content(); ?></div>
     </div>
 

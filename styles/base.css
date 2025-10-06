@@ -1,7 +1,14 @@
 /* SKIP CONTENT */
+#wrapper > .skip-link {
+    display: block;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+}
 #wrapper > .skip-link:focus {
     clip: inherit;
     outline: none;
+    position: absolute;
     left: 6px;
     top: 7px;
     height: auto;
@@ -21,11 +28,11 @@
 
 /* HEADER MENU
 ================================================== */
-#zone-header-menu .mfwMenu .hamburger-header h3 {
+#zone-header-menu .mfwMenu .hamburger-header {
     display: none;
 }
 
-#zone-header-menu .mfwMenu.responsive .hamburger-header h3 {
+#zone-header-menu .mfwMenu.responsive .hamburger-header {
     display: block;
 }
 #zone-header-menu .mfwMenu .hamburger-header h3 .fa {
