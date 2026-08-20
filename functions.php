@@ -816,7 +816,7 @@ class MichiganFramework
             $version = $matches[1];
         }
 
-        if( $version && version_compare( $version, self::$_version ) ) {
+        if( $version && (version_compare( $version, self::$_version ) > 0) ) {
             $checkedData->response[ self::$_gitUpdate['dir'] ] = array(
                 'package'     => self::$_gitUpdate['zip'],
                 'new_version' => $version,

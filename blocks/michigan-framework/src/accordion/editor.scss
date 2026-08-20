@@ -1,15 +1,26 @@
-.mfw-accordion {
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-accordion {
+	border: 1px dotted #f00;
+}
+
+.wp-block-michigan-framework-accordion {
     border: 1px dashed #ccc;
 }
-.mfw-accordion > label {
+.wp-block-michigan-framework-accordion > label {
     position: relative;
     display: block;
     padding: 5px 30px 5px 5px;
     line-height: 1;
+    min-height: 20px;
     border: 1px solid #efefef;
     background-color: #efefef;
 }
-.mfw-accordion > label:after {
+.wp-block-michigan-framework-accordion > label:after {
     content: "\f156";
     font-family: dashicons;
     line-height: 1;
@@ -25,6 +36,6 @@
     top: 50%;
     margin-top: -.6rem;
 }
-.mfw-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
+.wp-block-michigan-framework-accordion > .mfw-accordion-content-wrap > .mfw-accordion-content {
     padding: 0 1em;
 }
