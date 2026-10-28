@@ -6,13 +6,16 @@ export const transforms = {
             type: 'shortcode',
             tag: 'accordion',
 
-            transform: ( { attributes, content } ) => {
+            transform: ( attributes, content ) => {
+                attributes = attributes.named || {};
+
                 return createBlock( 'michigan-framework/accordion', {
                     title: attributes.title,
                     id: attributes.id,
                     state: attributes.state,
-                    content
-                } );
+                }, rawHandler({ 
+                    HTML: content.shortcode.content || '' 
+                }) );
             },
         },
         {

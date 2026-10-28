@@ -99,6 +99,11 @@ class MichiganFramework
             }
         }
 
+        // Load all block assets
+        // @NOTE: https://wordpress.org/plugins/load-combined-core-block-assets/
+        //        likely needed indefinitely for legacy content conversions
+        add_filter( 'should_load_separate_core_block_assets', '__return_false', 100 );
+
         // REGISTER ACTIONS/FILTERS
         add_action( 'after_setup_theme', 'MichiganFramework::setupTheme' );
         add_action( 'wp_enqueue_scripts', 'MichiganFramework::enqueue' );
